@@ -2,12 +2,12 @@ from setuptools import find_packages, setup
 from channels import __version__
 
 setup(
-    name='channels',
+    name='bulb-channels',
     version=__version__,
-    url='http://github.com/django/channels',
-    author='Django Software Foundation',
-    author_email='foundation@djangoproject.com',
-    description="Brings async, event-driven capabilities to Django. Django 2.2 and up only.",
+    url='http://github.com/Bulb-Core/bulb-channels',
+    author='LilaRest',
+    author_email='mail@lila.rest',
+    description="For of the django-channels project to make it compatible with bulb.",
     license='BSD',
     packages=find_packages(exclude=['tests']),
     include_package_data=True,
