@@ -20,13 +20,16 @@ def get_user(scope):
     Return the user model instance associated with the given scope.
     If no user is retrieved, return an instance of `AnonymousUser`.
     """
+    user = None
     if "session" not in scope:
         raise ValueError(
             "Cannot find session in scope. You should wrap your consumer in SessionMiddleware."
         )
     session_key = scope["session"]._wrapped._SessionBase__session_key
-    user_node = gdbh.w_transaction("MATCH (:Session {session_key: '%s'})-[:IS_SESSION_OF]->(n:User) RETURN n" % session_key)[0]["n"]
-    user = BaseNodeAndRelationship.build_fake_instance(user_node, User)
+    user_node_request = gdbh.w_transaction("MATCH (:Session {session_key: '%s'})-[:IS_SESSION_OF]->(n:User) RETURN n" % session_key)
+    if user_node_request:
+        user_node = user_node_request[0]["n"]
+        user = BaseNodeAndRelationship.build_fake_instance(user_node, User)
 
     return user or AnonymousUser()
 
